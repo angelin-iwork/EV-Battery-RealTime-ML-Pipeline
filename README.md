@@ -19,19 +19,21 @@ graph TD
     classDef gold fill:#ffd700,stroke:#333,stroke-width:2px,color:#000;
     classDef ml fill:#8673a1,stroke:#333,stroke-width:2px,color:#fff;
 
-    %% Architecture Flow
-    subgraph IoT_Telemetry [1,000 EV Fleet Telemetry]
-        A[Smart BMS Sensors] -->|Voltage, SoC, Temp, kW| B(PySpark Batch Ingestion)
+    %% 1. Fleet Telemetry Ingestion
+    subgraph IoT_Telemetry [1000 EV Fleet Telemetry]
+        A[Smart BMS Sensors] -->|Voltage, SoC, Temp, kW| B(PySpark Ingestion)
     end
 
+    %% 2. Medallion Architecture Steps
     subgraph Medallion_Architecture [Databricks Lakehouse Pipeline]
-        B -->|Raw Ingest| C[(Bronze Layer: Raw Data Table)]:::bronze
-        C -->|Data Cleaning & Filtering| D[(Silver Layer: Enriched Alerts)]:::silver
-        D -->|Optimized Write| E[(Gold Layer: Delta Lake Table)]:::gold
+        B -->|Raw Ingest| C[(Bronze Layer: Raw Data)]:::bronze
+        C -->|Cleaning & Filtering| D[(Silver Layer: Alerts)]:::silver
+        D -->|Optimized Write| E[(Gold Layer: Delta Table)]:::gold
     end
 
+    %% 3. Output Consumption
     subgraph Value_Realization [Analytics & AI Layer]
-        E -->|Spark SQL| F[Business Intelligence & Fleet Risk Metrics]
+        E -->|Spark SQL| F[Fleet Risk Management BI]
         E -->|PySpark MLlib| G[Random Forest Classifier Model]:::ml
         G -->|98.63% Accuracy| H[Predictive Overheat Alerts]
     end
