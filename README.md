@@ -22,32 +22,6 @@ graph TD
     G -->|98.63% Accuracy Prediction| H[Predictive Overheat Alerts]
 
 
-
-
-    %% 1. Fleet Telemetry Ingestion
-    subgraph IoT_Telemetry [1000 EV Fleet Telemetry]
-        A[Smart BMS Sensors] -->|Voltage, SoC, Temp, kW| B(PySpark Ingestion)
-    end
-
-    %% 2. Medallion Architecture Steps
-    subgraph Medallion_Architecture [Databricks Lakehouse Pipeline]
-        B -->|Raw Ingest| C[(Bronze Layer: Raw Data)]:::bronze
-        C -->|Cleaning & Filtering| D[(Silver Layer: Alerts)]:::silver
-        D -->|Optimized Write| E[(Gold Layer: Delta Table)]:::gold
-    end
-
-    %% 3. Output Consumption
-    subgraph Value_Realization [Analytics & AI Layer]
-        E -->|Spark SQL| F[Fleet Risk Management BI]
-        E -->|PySpark MLlib| G[Random Forest Classifier Model]:::ml
-        G -->|98.63% Accuracy| H[Predictive Overheat Alerts]
-    end
-
-#
-
-
-
-
 # Tech Stack
 * Azure Databricks
 * PySpark & Spark SQL
