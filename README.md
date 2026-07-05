@@ -20,7 +20,7 @@ graph TD
     E -->|Spark SQL Queries| F[Fleet Risk Management BI]
     E -->|PySpark MLlib Training| G[Random Forest Classifier Model]
     G -->|98.63% Accuracy Prediction| H[Predictive Overheat Alerts]
-
+```
 
 
 ## Tech Stack
