@@ -2,22 +2,27 @@
 End to End EV Battery Telemetry
 # EV Battery Real-Time Energy & Machine Learning Pipeline
 
-## Project Architecture
-1. **Bronze Layer:** Simulated real-time Smart BMS telemetry data for 1,000 EVs using PySpark.
-2. **Silver Layer:** Filtered hardware anomalies like Overheating (>45°C) and Low Battery (<20%).
-3. **Gold Layer:** Saved clean enriched data into Delta Lake Tables.
-4. **Analytics Layer:** Ran Spark SQL queries for fleet risk management metrics.
-5. **AI Layer:** Trained a **Random Forest Classifier** using PySpark MLlib to predict battery overheat risks.
-
 ## 🏗️ Project Architecture
+markdown
+
+1.**Bronze Layer:** Simulated real-time Smart BMS telemetry data
+2.**Silver Layer:** filtered hardware anomalies like Overheating(>45°C).
+3.**Gold Layer:** Saved clean enriched data into Delia Lake Tables.
+4.**Analytifcs Layer:** Ran Spark SQL quertes for fleet risk management.
+5.**AI Layer:** Trained a Random Forest Classifier using PySpark MLlib.
 
 ```mermaid
 graph TD
-    %% Define Styles
-    classDef bronze fill:#cd7f32,stroke:#333,stroke-width:2px,color:#fff;
-    classDef silver fill:#c0c0c0,stroke:#333,stroke-width:2px,color:#000;
-    classDef gold fill:#ffd700,stroke:#333,stroke-width:2px,color:#000;
-    classDef ml fill:#8673a1,stroke:#333,stroke-width:2px,color:#fff;
+    A[Smart BMS Sensors] -->|Voltage, SoC, Temp, kW| B(PySpark Data Ingestion)
+    B --> C[(Bronze Layer: Raw Data)]
+    C -->|Data Cleaning & Filtering| D[(Silver Layer: Enriched Alerts)]
+    D -->|Optimized Storage Write| E[(Gold Layer: Delta Lake Table)]
+    E -->|Spark SQL Queries| F[Fleet Risk Management BI]
+    E -->|PySpark MLlib Training| G[Random Forest Classifier Model]
+    G -->|98.63% Accuracy Prediction| H[Predictive Overheat Alerts]
+
+
+
 
     %% 1. Fleet Telemetry Ingestion
     subgraph IoT_Telemetry [1000 EV Fleet Telemetry]
@@ -38,7 +43,12 @@ graph TD
         G -->|98.63% Accuracy| H[Predictive Overheat Alerts]
     end
 
-## Tech Stack
+#
+
+
+
+
+# Tech Stack
 * Azure Databricks
 * PySpark & Spark SQL
 * Delta Lake
